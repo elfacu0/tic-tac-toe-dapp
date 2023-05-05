@@ -9,7 +9,12 @@ const TokenAdminSecretKey = process.env.TOKEN_ADMIN_SECRET ?? ''
 const CrowdfundId = process.env.CROWDFUND_ID ?? ''
 const TokenId = process.env.TOKEN_ID ?? ''
 
+const GameId = process.env.GAME_ID ?? ''
+const DeployerId = process.env.DEPLOYER_ID ?? ''
+
 const Constants = {
+  GameId,
+  DeployerId,
   CrowdfundId,
   TokenAdmin,
   TokenAdminSecretKey,
