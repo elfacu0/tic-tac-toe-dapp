@@ -1,10 +1,10 @@
 use crate::game::{get_player_a, get_player_b, get_winner, has_ended, has_winner};
 use crate::storage::DataKey;
 use core::cmp::{max, min};
-use soroban_sdk::{contracttype, Address, BytesN, Env, Vec, vec};
+use soroban_sdk::{contracttype, vec, Address, BytesN, Env, Vec};
 
 mod token {
-    soroban_sdk::contractimport!(file = "../soroban_token_spec.wasm");
+    soroban_sdk::contractimport!(file = "../token/soroban_token_spec.wasm");
 }
 
 #[derive(Clone, PartialEq, Debug)]
@@ -93,21 +93,20 @@ pub fn collect(env: &Env, player: Address) -> Vec<Bet> {
     let returned_amount = max(0, player_bet.amount - opponent_bet.amount);
     pay(env, &player, player_bet.token.clone(), returned_amount);
 
-    res.push_back(Bet{
+    res.push_back(Bet {
         token: player_bet.token.clone(),
         amount: returned_amount,
-        paid: true
+        paid: true,
     });
-
 
     if has_winner(env) && get_winner(env) == player && profit > 0 {
         let diff = player_bet.amount - returned_amount;
         pay(env, &player, opponent_bet.token.clone(), profit + diff);
 
-        res.push_back(Bet{
+        res.push_back(Bet {
             token: opponent_bet.token.clone(),
             amount: profit + diff,
-            paid: true
+            paid: true,
         });
     }
 

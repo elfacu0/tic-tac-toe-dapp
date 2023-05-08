@@ -4,9 +4,7 @@ use soroban_sdk::{
 };
 
 mod game_contract {
-    soroban_sdk::contractimport!(
-        file = "../target/wasm32-unknown-unknown/release/tictactoe_game.wasm"
-    );
+    soroban_sdk::contractimport!(file = "../game/tictactoe_game.wasm");
 }
 
 #[contracttype]

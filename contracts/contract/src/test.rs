@@ -53,7 +53,7 @@ impl GameTest {
 }
 
 mod token {
-    soroban_sdk::contractimport!(file = "../soroban_token_spec.wasm");
+    soroban_sdk::contractimport!(file = "../token/soroban_token_spec.wasm");
     pub type TokenClient = Client;
 }
 
