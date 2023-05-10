@@ -89,3 +89,20 @@ soroban contract invoke \
   --token "$TOKEN_ID"
 
 echo "Done"
+
+# Tic tac toe
+echo Deploy the Deployer contract
+DEPLOYER_ID="$(
+  soroban contract deploy $ARGS \
+    --wasm target/wasm32-unknown-unknown/release/tictactoe_manager.wasm
+)"
+echo "$DEPLOYER_ID" > .soroban/deployer_id
+echo "Contract deployed succesfully with ID: $DEPLOYER_ID"
+
+echo Install the WASM Game contract
+GAME_ID="$(
+  soroban contract install $ARGS \
+    --wasm target/wasm32-unknown-unknown/release/tictactoe_game.wasm
+)"
+echo "$GAME_ID" > .soroban/game_id
+echo "Contract installed succesfully with ID: $GAME_ID"
