@@ -1,0 +1,17 @@
+.grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 300px;
+  width: 300px;
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 5px;
+  color: #1a1523;
+}
+
+.displayData {
+  display: flex;
+}
