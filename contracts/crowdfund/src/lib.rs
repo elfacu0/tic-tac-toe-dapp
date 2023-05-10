@@ -165,6 +165,10 @@ impl Crowdfund {
         get_token(&e)
     }
 
+    pub fn pepe(_: Env, x: i128) -> i128 {
+        x
+    }
+
     pub fn balance(e: Env, user: Address) -> i128 {
         let recipient = get_recipient(&e);
         if get_state(&e) == State::Success {
