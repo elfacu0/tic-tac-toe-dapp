@@ -9,6 +9,7 @@ import {
   LinkSvg,
   TwitterSvg,
 } from '../../../assets/icons'
+import { IResultSubmit } from '../form-deployer'
 
 export interface TransactionModalProps {
   result: IResultSubmit

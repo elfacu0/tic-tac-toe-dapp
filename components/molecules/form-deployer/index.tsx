@@ -8,9 +8,16 @@ import {
   useNetwork,
 } from '../../../wallet'
 import * as SorobanClient from 'soroban-client'
-import { IResultSubmit } from '../form-pledge'
 import { contractTransaction } from '../../../shared/sorobanHelpers'
 let xdr = SorobanClient.xdr
+
+export interface IResultSubmit {
+  status: string
+  scVal?: SorobanClient.xdr.ScVal
+  error?: string
+  value?: number
+  symbol?: string 
+}
 
 export interface IFormDeployerProps {
   account: string
