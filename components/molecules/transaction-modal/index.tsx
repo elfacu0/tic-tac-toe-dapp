@@ -33,14 +33,14 @@ export function TransactionModal({
             height={64}
             alt="avatar"
           />
-          <span className={styles.value}>
-            {isSuccess ? `${result.value} ${result.symbol}` : ''}
-          </span>
-          <h6>{isSuccess ? 'SUCCESSFULLY PLEDGED' : 'ERROR'}</h6>
+          <h6>{isSuccess ? 'SUCCESSFULLY DEPLOYED' : 'ERROR'}</h6>
           <span className={styles.message}>
-            {isSuccess
-              ? 'You’re awesome! Thanks for contributing. Spread the word to help fund this project!'
+            {(isSuccess && result && result.scVal)
+              ? 'HERE IS YOUR GAME ID!!'
               : result.error}
+          </span>
+          <span className={styles.message}>
+            {(isSuccess && result && result.scVal) && `${result.scVal.value().toString('hex')}`}
           </span>
           {isSuccess && (
             <div className={styles.socialButtons}>
