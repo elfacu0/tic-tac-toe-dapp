@@ -4,7 +4,6 @@ import { Cell, Loading } from '../../atoms'
 import styles from './style.module.css'
 import { useSendTransaction } from '@soroban-react/contracts'
 import { useSorobanReact } from '@soroban-react/core'
-import { IResultSubmit } from '../form-pledge'
 import * as SorobanClient from 'soroban-client'
 import { contractTransaction } from '../../../shared/sorobanHelpers'
 
