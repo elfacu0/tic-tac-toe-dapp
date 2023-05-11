@@ -40,7 +40,7 @@ export function TransactionModal({
               : result.error}
           </span>
           <span className={styles.message}>
-            {(isSuccess && result && result.scVal) && `${result.scVal.value().toString('hex')}`}
+            {(isSuccess && result && result.scVal) && `${result.scVal.bytes().toString('hex')}`}
           </span>
           {isSuccess && (
             <div className={styles.socialButtons}>

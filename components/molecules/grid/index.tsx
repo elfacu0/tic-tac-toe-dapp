@@ -27,8 +27,12 @@ export function Grid(props: IGridProps) {
   const { server } = useNetwork()
 
 
-  const parseGrid = (rawGrid: SorobanClient.xdr.ScVal[]) => {
-    return rawGrid.map((e: SorobanClient.xdr.ScVal, i: number) => e.value().toString("utf-8"))
+  const parseGrid = (rawGrid: (SorobanClient.xdr.ScVal[] | [])) => {
+    return rawGrid.map((e: SorobanClient.xdr.ScVal, i: number) => {
+      const cell = e.value();
+      if(!cell) return "";
+      return cell.toString()
+    })
   }
 
   const getGrid = async () => {
@@ -50,7 +54,10 @@ export function Grid(props: IGridProps) {
       )
 
       if (result) {
-        setGrid(parseGrid(result.value()));
+        const rawGrid: (SorobanClient.xdr.ScVal[] | null) = result.vec();
+        if(rawGrid !== null){
+          setGrid(parseGrid(rawGrid));
+        }
 
         setResultSubmit({
           status: 'success',
@@ -100,8 +107,11 @@ export function Grid(props: IGridProps) {
       )
 
       if (result) {
-        setGrid(parseGrid(result.value()));
-
+        const rawGrid: (SorobanClient.xdr.ScVal[] | null) = result.vec();
+        if(rawGrid !== null){
+          setGrid(parseGrid(rawGrid));
+        }
+        
         setResultSubmit({
           status: 'success',
           scVal: result,
