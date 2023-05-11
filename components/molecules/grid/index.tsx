@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react'
-import { useIsMounted, useNetwork } from '../../../wallet'
-import { Cell, Loading } from '../../atoms'
-import styles from './style.module.css'
 import { useSendTransaction } from '@soroban-react/contracts'
 import { useSorobanReact } from '@soroban-react/core'
+import { useEffect, useState } from 'react'
 import * as SorobanClient from 'soroban-client'
 import { contractTransaction } from '../../../shared/sorobanHelpers'
-
+import { IResultSubmit } from '../../../shared/types'
+import { useIsMounted, useNetwork } from '../../../wallet'
+import { Button, Cell, Loading } from '../../atoms'
+import styles from './style.module.css'
 
 export interface IGridProps {
   account: string
@@ -21,14 +21,14 @@ export function Grid(props: IGridProps) {
   const mounted = useIsMounted()
   const sorobanContext = useSorobanReact()
   const { sendTransaction } = useSendTransaction()
-  const [grid, setGrid] = useState<string[]>(["","","","","","","","",""])
+  const [grid, setGrid] = useState<string[]>(["", "", "", "", "", "", "", "", ""])
   const [resultSubmit, setResultSubmit] = useState<IResultSubmit | undefined>()
-  const [fetching, setFetching] = useState<Boolean>(false)
+  const [fetching, setFetching] = useState<boolean>(false)
   const { server } = useNetwork()
 
 
-  const parseGrid = (rawGrid: SorobanClient.xdr.ScVal[])=>{
-    return rawGrid.map((e:SorobanClient.xdr.ScVal ,i: number)=> e.value().toString("utf-8"))
+  const parseGrid = (rawGrid: SorobanClient.xdr.ScVal[]) => {
+    return rawGrid.map((e: SorobanClient.xdr.ScVal, i: number) => e.value().toString("utf-8"))
   }
 
   const getGrid = async () => {
@@ -78,13 +78,13 @@ export function Grid(props: IGridProps) {
   }, [props.gameId])
 
 
-  const markCell = async(index: number)=>{
+  const markCell = async (index: number) => {
     if (!server) throw new Error("Not connected to server")
 
     try {
       const source = await server.getAccount(props.account)
-      const posX = Math.abs((index % 3)-2);
-      const posY = Math.abs((~~(index / 3))-2);       
+      const posX = Math.abs((index % 3) - 2);
+      const posY = Math.abs((~~(index / 3)) - 2);
 
       let result = await sendTransaction(
         contractTransaction(
@@ -126,12 +126,15 @@ export function Grid(props: IGridProps) {
   return (
     <>
       {mounted && (
-        <div className={styles.grid}>
-          {fetching && <Loading size={10}/>}
-          {
-            grid.map((val,i)=><Cell key={i} index={i} state={val} disabled={!props.gameId} onClick={markCell}/>)
-          }
-        </div>
+        <>
+          <div className={styles.grid}>
+            {fetching && (<div className={styles.loadContainer}><Loading size={100} /></div>)}
+            {
+              grid.map((val, i) => <Cell key={i} index={i} state={val} disabled={!props.gameId || fetching} onClick={markCell} />)
+            }
+          </div>
+          <Button disabled={!props.gameId} isLoading={false} onClick={getGrid} title='Reload Grid' />
+        </>
       )}
     </>
   )
