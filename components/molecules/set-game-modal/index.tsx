@@ -9,7 +9,7 @@ import {
   LinkSvg,
   TwitterSvg,
 } from '../../../assets/icons'
-import { IResultSubmit } from '../form-deployer'
+import { IResultSubmit } from '../../../shared/types'
 
 export interface SetGameModalProps {
   result: IResultSubmit

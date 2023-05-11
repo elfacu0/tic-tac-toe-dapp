@@ -9,15 +9,8 @@ import {
 } from '../../../wallet'
 import * as SorobanClient from 'soroban-client'
 import { contractTransaction } from '../../../shared/sorobanHelpers'
+import { IResultSubmit } from '../../../shared/types'
 let xdr = SorobanClient.xdr
-
-export interface IResultSubmit {
-  status: string
-  scVal?: SorobanClient.xdr.ScVal
-  error?: string
-  value?: number
-  symbol?: string 
-}
 
 export interface IFormDeployerProps {
   account: string

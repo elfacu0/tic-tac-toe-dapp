@@ -1,13 +1,11 @@
-import styles from './style.module.css'
+import { FunctionComponent, useState } from 'react'
+import { Constants } from '../../../shared/constants'
 import {
   useAccount,
   useNetwork,
 } from '../../../wallet'
-import { Grid } from '../../molecules'
-import { Constants } from '../../../shared/constants'
-import { FunctionComponent, useState } from 'react'
-import { WhoseTurn } from '../../molecules/whose-turn'
-import { SetGame } from '../../molecules/set-game'
+import { Grid, SetGame, WhoseTurn } from '../../molecules'
+import styles from './style.module.css'
 
 const Game: FunctionComponent = () => {
   const [gameId, setGameId] = useState<string>("")
@@ -21,7 +19,10 @@ const Game: FunctionComponent = () => {
       {account &&
         <>
           <SetGame
+            deployerId={Constants.DeployerId}
             gameId={gameId}
+            networkPassphrase={networkPassphrase}
+            account={account.address}
             setGameId={setGameId}
           />
           <Grid tokenId={Constants.TokenId}
