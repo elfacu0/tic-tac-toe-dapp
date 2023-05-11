@@ -10,18 +10,17 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>
-          Crowdfund Template - An example of how to run a crowdfund campaign on
-          Soroban.
+          TicTacToe - Play the game using stellar smart contracts.
         </title>
         <meta
           name="description"
-          content="An example of loading information from a soroban smart contract"
+          content="Play TicTactoe with soroban smart contract"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <header className={styles.header}>
-        <h3>Starfund</h3>
+        <h3>TicTacToe</h3>
         <WalletData />
       </header>
       <main className={styles.main}>
