@@ -1,13 +1,13 @@
-import { FunctionComponent, useState } from 'react'
-import { Button, Card } from '../../atoms'
-import base32 from 'base32.js'
 import { useSendTransaction } from '@soroban-react/contracts'
-import { SorobanContext, useSorobanReact } from '@soroban-react/core'
+import { useSorobanReact } from '@soroban-react/core'
+import { FunctionComponent, useState } from 'react'
+import { Address } from 'soroban-client'
+import { contractTransaction } from '../../../shared/sorobanHelpers'
+import { IResultSubmit } from '../../../shared/types'
 import {
   useNetwork,
 } from '../../../wallet'
-import { IResultSubmit } from '../form-pledge'
-import { contractTransaction } from '../../../shared/sorobanHelpers'
+import { Button } from '../../atoms'
 
 export interface ITurnProps {
   account: string
@@ -22,6 +22,7 @@ const WhoseTurn: FunctionComponent<ITurnProps> = props => {
 
   const [resultSubmit, setResultSubmit] = useState<IResultSubmit | undefined>()
   const [isSubmitting, setSubmitting] = useState(false)
+  const [turn, setTurn] = useState<string>('')
   const { server } = useNetwork()
 
   const { sendTransaction } = useSendTransaction()
@@ -41,17 +42,11 @@ const WhoseTurn: FunctionComponent<ITurnProps> = props => {
         'turn',
       );
 
-      let result = await sendTransaction(transaction, { sorobanContext })
+      let result = await sendTransaction(transaction, { sorobanContext });
 
-      console.log(result.value()?.value().value().toString('hex'));
+      const addressTurn = Address.fromScAddress(result.address()).toString();
 
-      // const decoder = new base32.Encoder({ type: "crockford" });
-
-      // const encoded = base32.encode(result.value()?.value().value(),"base32hex")
-
-      // console.log(decoder.write(result.value()?.value().value()).finalize())
-      
-
+      setTurn(addressTurn)
 
       setResultSubmit({
         status: 'success',
@@ -71,7 +66,7 @@ const WhoseTurn: FunctionComponent<ITurnProps> = props => {
     } finally {
       setSubmitting(false)
     }
-  }  
+  }
 
   return (
     <div>
@@ -81,9 +76,9 @@ const WhoseTurn: FunctionComponent<ITurnProps> = props => {
         disabled={!props.gameId}
         isLoading={isSubmitting}
       />
-      {/* {resultSubmit && (
-        <Card>Is {resultSubmit.scVal.value().value().value().toString("hex") == props.account ? "Your Turn" : "Enemy's Turn"}</Card>
-      )} */}
+      {resultSubmit && (
+        <span>Is {turn == props.account ? "Your Turn" : { turn } + " Turn"}</span>
+      )}
     </div>
   )
 }
