@@ -3,7 +3,6 @@ var fs = require('fs');
 module.exports = {
   reactStrictMode: true,
   env: {
-    CROWDFUND_ID: fs.readFileSync('.soroban/crowdfund_id').toString().trim(),
     GAME_ID: fs.readFileSync('.soroban/game_id').toString().trim(),
     DEPLOYER_ID: fs.readFileSync('.soroban/deployer_id').toString().trim(),
     TOKEN_ADMIN_ADDRESS: fs.readFileSync('.soroban/token_admin_address').toString().trim(),

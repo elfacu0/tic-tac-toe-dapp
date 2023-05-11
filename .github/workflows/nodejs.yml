@@ -32,7 +32,8 @@ jobs:
     - run: |
         mkdir -p .soroban
         echo 'a9ab643486dc0dbcdc1485e6589e8bb3bcbbd8e69ad66c703556b4d6645a6dc8' > .soroban/token_id
-        echo '42798d5db884626e57f96630e7d02ba8210b4629d2959ef79ebb9e6538676ef9' > .soroban/crowdfund_id
         echo 'GDT2NORMZF6S2T4PT4OBJJ43OPD3GPRNTJG3WVVFB356TUHWZQMU6C3U' > .soroban/token_admin_address
         echo 'SAKCFFFNCE7XAWYMYVRZQYKUK6KMUCDIINLWISJYTMYJLNR2QLCDLFVT' > .soroban/token_admin_secret
+        echo 'ac15f8574641c04e3edb12384ac6a95fac4a35e1da7d4a4b192ed7db9628d314' > .soroban/game_id
+        echo 'b850a708714cd91a980f735f9c74cdfb359a5b68310e827c658af7f9ed01e0f6' > .soroban/deployer_id
     - run: npm run-script build

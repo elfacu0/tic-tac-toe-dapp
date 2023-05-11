@@ -63,32 +63,8 @@ echo "Token wrapped succesfully with TOKEN_ID: $TOKEN_ID"
 
 echo -n "$TOKEN_ID" > .soroban/token_id
 
-echo Build the crowdfund contract
+echo Build the contracts
 make build
-
-echo Deploy the crowdfund contract
-CROWDFUND_ID="$(
-  soroban contract deploy $ARGS \
-    --wasm target/wasm32-unknown-unknown/release/soroban_crowdfund_contract.wasm
-)"
-echo "$CROWDFUND_ID" > .soroban/crowdfund_id
-
-echo "Contract deployed succesfully with ID: $CROWDFUND_ID"
-
-echo "Initialize the crowdfund contract"
-deadline="$(($(date +"%s") + 86400))"
-soroban contract invoke \
-  $ARGS \
-  --wasm target/wasm32-unknown-unknown/release/soroban_crowdfund_contract.wasm \
-  --id "$CROWDFUND_ID" \
-  -- \
-  initialize \
-  --recipient "$TOKEN_ADMIN_ADDRESS" \
-  --deadline "$deadline" \
-  --target_amount "1000000000" \
-  --token "$TOKEN_ID"
-
-echo "Done"
 
 # Tic tac toe
 echo Deploy the Deployer contract
