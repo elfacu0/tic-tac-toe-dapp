@@ -1,0 +1,19 @@
+.container {
+  width: 250px;
+  padding: 20px;
+}
+
+.msg{
+  padding-bottom: 5px;
+}
+
+.chats{
+  text-align: left;
+  border-radius: 12px;
+  min-height: 100px;
+  max-height: 400px;
+  margin-bottom: 10px;
+  padding: 10px;
+  overflow-y: hidden;
+  background-color: #ffffff;
+}
