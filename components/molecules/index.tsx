@@ -1,5 +1,4 @@
 export * from './chat'
-export * from './deposits'
 export * from './form-deployer'
 export * from './grid'
 export * from './set-game'
