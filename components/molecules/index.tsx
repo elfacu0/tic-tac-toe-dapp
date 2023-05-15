@@ -1,3 +1,4 @@
+export * from './bet'
 export * from './chat'
 export * from './form-deployer'
 export * from './grid'
