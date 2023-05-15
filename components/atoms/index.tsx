@@ -1,6 +1,5 @@
 export * from './address-input'
 export * from './amount-input'
-export * from './author-info'
 export * from './button'
 export * from './card'
 export * from './cell'
