@@ -4,7 +4,7 @@ import {
   useAccount,
   useNetwork,
 } from '../../../wallet'
-import { Chat, Grid, SetGame, WhoseTurn } from '../../molecules'
+import { Bet, Chat, Grid, SetGame, WhoseTurn } from '../../molecules'
 import styles from './style.module.css'
 
 const Game: FunctionComponent = () => {
@@ -19,8 +19,14 @@ const Game: FunctionComponent = () => {
       {account &&
         <div className={styles.row}>
           <div className={styles.column}>
-          <Chat
+            <Chat
               deployerId={Constants.DeployerId}
+              gameId={gameId}
+              networkPassphrase={networkPassphrase}
+              account={account.address}
+            />
+            <Bet
+              tokenId={Constants.TokenId}
               gameId={gameId}
               networkPassphrase={networkPassphrase}
               account={account.address}
