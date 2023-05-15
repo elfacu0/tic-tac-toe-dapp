@@ -56,6 +56,7 @@ const Bet: FunctionComponent<IBetProps> = props => {
   }
 
   let token = useLoadToken()
+  
   const userBalance = convert.scvalToBigNumber(token.userBalance.result)
   const tokenDecimals =
     token.decimals.result && (token.decimals.result?.u32() ?? 7)
@@ -173,7 +174,7 @@ const Bet: FunctionComponent<IBetProps> = props => {
       />
       <div className={styles.wrapper}>
         <div>
-          <h6>Your balance:  {userBalance.toString()} {Utils.formatAmount(userBalance, tokenDecimals)} {tokenSymbol}</h6>
+          <h6>Your balance:  {Utils.formatAmount(userBalance, tokenDecimals)} {tokenSymbol}</h6>
         </div>
       </div>
     </div>
