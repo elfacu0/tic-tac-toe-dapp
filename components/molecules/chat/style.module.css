@@ -1,6 +1,6 @@
 .container {
   width: 250px;
-  padding: 20px;
+  padding: 0px 20px 0px 20px;
 }
 
 .msg{
@@ -10,10 +10,9 @@
 .chats{
   text-align: left;
   border-radius: 12px;
-  min-height: 100px;
-  max-height: 400px;
-  margin-bottom: 10px;
+  height: 100px;
   padding: 10px;
   overflow-y: hidden;
   background-color: #ffffff;
+  margin: 0px 0px 16px 0px;
 }
