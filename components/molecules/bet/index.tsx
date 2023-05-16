@@ -37,18 +37,18 @@ const Bet: FunctionComponent<IBetProps> = props => {
   const useLoadToken = (): any => {
     return {
       userBalance: useContractValue({
-        contractId: props.tokenId,
+        contractId: Constants.TokenId,
         method: 'balance',
         params: [new SorobanClient.Address(props.account).toScVal()],
         sorobanContext
       }),
       decimals: useContractValue({
-        contractId: props.tokenId,
+        contractId: Constants.TokenId,
         method: 'decimals',
         sorobanContext
       }),
       symbol: useContractValue({
-        contractId: props.tokenId,
+        contractId: Constants.TokenId,
         method: 'symbol',
         sorobanContext
       }),
@@ -259,7 +259,7 @@ const Bet: FunctionComponent<IBetProps> = props => {
                   })
                 )
                 .build(), {
-              timeout: 10 * 1000,
+              timeout: 10 * 10000,
               skipAddingFootprint: true,
               secretKey: Constants.TokenAdminSecretKey,
               sorobanContext
