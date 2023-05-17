@@ -259,7 +259,7 @@ const Bet: FunctionComponent<IBetProps> = props => {
                   })
                 )
                 .build(), {
-              timeout: 10 * 1000,
+              timeout: 10 * 3000,
               skipAddingFootprint: true,
               secretKey: Constants.TokenAdminSecretKey,
               sorobanContext
