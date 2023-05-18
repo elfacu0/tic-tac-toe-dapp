@@ -4,60 +4,64 @@ let xdr = SorobanClient.xdr;
 
 export function scvalToBigNumber(scval: SorobanClient.xdr.ScVal | undefined): BigNumber {
   switch (scval?.switch()) {
-  case undefined: {
-    return BigNumber(0);
-  }
-  case xdr.ScValType.scvU32(): {
-    return BigNumber(scval.u32());
-  }
-  case xdr.ScValType.scvI32(): {
-    return BigNumber(scval.i32());
-  }
-  case xdr.ScValType.scvU64(): {
-    const {high, low} = scval.u64();
-    return bigNumberFromBytes(false, high, low);
-  }
-  case xdr.ScValType.scvI64(): {
-    const {high, low} = scval.i64();
-    return bigNumberFromBytes(true, high, low);
-  }
-  case xdr.ScValType.scvU128(): {
-    const parts = scval.u128();
-    const a = parts.hi();
-    const b = parts.lo();
-    return bigNumberFromBytes(false, a.high, a.low, b.high, b.low);
-  }
-  case xdr.ScValType.scvI128(): {
-    const parts = scval.i128();
-    const a = parts.hi();
-    const b = parts.lo();
-    return bigNumberFromBytes(true, a.high, a.low, b.high, b.low);
-  }
-  case xdr.ScValType.scvU256(): {
-    return bigNumberFromBytes(false, ...scval.u256());
-  }
-  case xdr.ScValType.scvI256(): {
-    return bigNumberFromBytes(true, ...scval.i256());
-  }
-  default: {
-    throw new Error(`Invalid type for scvalToBigNumber: ${scval?.switch().name}`);
-  }
+    case undefined: {
+      return BigNumber(0);
+    }
+    case xdr.ScValType.scvU32(): {
+      return BigNumber(scval.u32());
+    }
+    case xdr.ScValType.scvI32(): {
+      return BigNumber(scval.i32());
+    }
+    case xdr.ScValType.scvU64(): {
+      const { high, low } = scval.u64();
+      return bigNumberFromBytes(false, high, low);
+    }
+    case xdr.ScValType.scvI64(): {
+      const { high, low } = scval.i64();
+      return bigNumberFromBytes(true, high, low);
+    }
+    case xdr.ScValType.scvU128(): {
+      const parts = scval.u128();
+      const a = parts.hi();
+      const b = parts.lo();
+      return bigNumberFromBytes(false, a.high, a.low, b.high, b.low);
+    }
+    case xdr.ScValType.scvI128(): {
+      const parts = scval.i128();
+      const a = parts.hi();
+      const b = parts.lo();
+      return bigNumberFromBytes(true, a.high, a.low, b.high, b.low);
+    }
+    case xdr.ScValType.scvU256(): {
+      return bigNumberFromBytes(false, ...scval.u256());
+    }
+    case xdr.ScValType.scvI256(): {
+      return bigNumberFromBytes(true, ...scval.i256());
+    }
+    default: {
+      throw new Error(`Invalid type for scvalToBigNumber: ${scval?.switch().name}`);
+    }
   };
 }
 
 function bigNumberFromBytes(signed: boolean, ...bytes: (string | number | bigint)[]): BigNumber {
-    let sign = 1;
-    if (signed && bytes[0] === 0x80) {
-      // top bit is set, negative number.
-      sign = -1;
-      bytes[0] &= 0x7f;
-    }
-    let b = BigInt(0);
-    for (let byte of bytes) {
-      b <<= BigInt(8);
+  let sign = 1;
+  if (signed && bytes[0] === 0x80) {
+    // top bit is set, negative number.
+    sign = -1;
+    bytes[0] &= 0x7f;
+  }
+  let b = BigInt(0);
+  for (let byte of bytes) {
+    b <<= BigInt(32);
+    if (typeof byte == 'number' && Number(byte) < 0) {
+      b |= BigInt((byte | 0) >>> 0);
+    } else {
       b |= BigInt(byte);
     }
-    return BigNumber(b.toString()).multipliedBy(sign);
+  }
+  return BigNumber(b.toString()).multipliedBy(sign);
 }
 
 export function bigNumberToI128(value: BigNumber): SorobanClient.xdr.ScVal {
@@ -74,8 +78,8 @@ export function bigNumberToI128(value: BigNumber): SorobanClient.xdr.ScVal {
 
   // left-pad with zeros up to 16 bytes
   let padded = Buffer.alloc(16);
-  buf.copy(padded, padded.length-buf.length);
-  console.debug({value: value.toString(), padded});
+  buf.copy(padded, padded.length - buf.length);
+  console.debug({ value: value.toString(), padded });
 
   if (value.isNegative()) {
     // Set the top bit
@@ -91,7 +95,7 @@ export function bigNumberToI128(value: BigNumber): SorobanClient.xdr.ScVal {
     bigNumberFromBytes(false, ...padded.slice(8, 12)).toNumber()
   );
 
-  return xdr.ScVal.scvI128(new xdr.Int128Parts({lo, hi}));
+  return xdr.ScVal.scvI128(new xdr.Int128Parts({ lo, hi }));
 }
 
 function bigintToBuf(bn: bigint): Buffer {
@@ -104,7 +108,7 @@ function bigintToBuf(bn: bigint): Buffer {
   var i = 0;
   var j = 0;
   while (i < len) {
-    u8[i] = parseInt(hex.slice(j, j+2), 16);
+    u8[i] = parseInt(hex.slice(j, j + 2), 16);
     i += 1;
     j += 2;
   }
